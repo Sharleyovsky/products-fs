@@ -1,0 +1,24 @@
+version: "3"
+services:
+  mongo:
+    container_name: mongo_container
+    image: mongo:latest
+    ports:
+      - published: ${DB_PORT:-27017}
+        target: 27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS}
+  api:
+    build:
+      context: be
+      dockerfile: Dockerfile
+    ports:
+      - published: ${API_PORT:-4000}
+        target: 4000
+    environment:
+      API_PORT: ${API_PORT}
+      DB_NAME: ${DB_NAME}
+      MONGODB_URI: mongodb://${DB_USER}:${DB_PASS}@mongo:${DB_PORT}
+    depends_on:
+      - mongo

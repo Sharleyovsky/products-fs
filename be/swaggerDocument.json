@@ -1,0 +1,282 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Products API test",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://localhost:3000/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Products"
+    }
+  ],
+  "paths": {
+    "/products": {
+      "get": {
+        "tags": [
+          "products"
+        ],
+        "summary": "Returns products",
+        "description": "Returns a product based on provided params",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "limit of how many items you want to load.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "This option enables you to skip amount of items you provide.",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lists products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductDocument"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid schema"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "products"
+        ],
+        "summary": "Add a product",
+        "description": "Add a new product to the database",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["message"],
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid schema"
+          },
+          "409": {
+            "description": "Product already exists in the database"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Product": {
+        "type": "object",
+        "required": [
+          "image",
+          "code",
+          "name",
+          "color",
+          "capacity",
+          "dimensions",
+          "features",
+          "energyClass",
+          "price"
+        ],
+        "properties": {
+          "image": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          },
+          "capacity": {
+            "type": "number"
+          },
+          "dimensions": {
+            "type": "string"
+          },
+          "features": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "energyClass": {
+            "type": "string"
+          },
+          "price": {
+            "type": "object",
+            "required": [
+              "value",
+              "currency",
+              "installment",
+              "validFrom",
+              "validTo"
+            ],
+            "properties": {
+              "value": {
+                "type": "integer"
+              },
+              "currency": {
+                "type": "string"
+              },
+              "installment": {
+                "type": "object",
+                "required": ["value", "period"],
+                "properties": {
+                  "value": {
+                    "type": "integer"
+                  },
+                  "period": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "validFrom": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "validTo": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        }
+      },
+      "ProductDocument": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": [
+            "_id",
+            "image",
+            "code",
+            "name",
+            "color",
+            "capacity",
+            "dimensions",
+            "features",
+            "energyClass",
+            "price"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "image": {
+              "type": "string"
+            },
+            "code": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "color": {
+              "type": "string"
+            },
+            "capacity": {
+              "type": "number"
+            },
+            "dimensions": {
+              "type": "string"
+            },
+            "features": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "energyClass": {
+              "type": "string"
+            },
+            "price": {
+              "type": "object",
+              "required": [
+                "value",
+                "currency",
+                "installment",
+                "validFrom",
+                "validTo"
+              ],
+              "properties": {
+                "value": {
+                  "type": "integer"
+                },
+                "currency": {
+                  "type": "string"
+                },
+                "installment": {
+                  "type": "object",
+                  "required": ["value", "period"],
+                  "properties": {
+                    "value": {
+                      "type": "integer"
+                    },
+                    "period": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "validFrom": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "validTo": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "types": ["jest", "node"],
+    "target": "ES2022",
+    "module": "commonjs",
+    "declaration": false,
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "sourceMap": false,
+    "inlineSourceMap": true,
+    "outDir": "build",
+    "typeRoots": ["./node_modules/@types"],
+    "resolveJsonModule": true,
+    "baseUrl": "./",
+  },
+  "exclude": ["node_modules", "build/**", "tests"],
+  "watchOptions": {
+    "watchFile": "DynamicPriorityPolling",
+    "watchDirectory": "DynamicPriorityPolling"
+  }
+}
